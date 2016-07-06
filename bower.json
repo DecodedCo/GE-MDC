@@ -1,0 +1,26 @@
+{
+  "name": "simple-websocket-client",
+  "version": "1.0.0",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests",
+    "target",
+    "test-target",
+    "sass"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7",
+    "bootstrap": "^3.3.6",
+    "jquery": "^3.0.0",
+    "d3": "^3.5.17",
+    "ng-stomp": "^0.2.0"
+  },
+  "resolutions": {
+    "jquery": "1.9.1 - 2"
+  }
+}
