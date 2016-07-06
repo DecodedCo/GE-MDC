@@ -1,0 +1,7 @@
+---
+applications:
+  - name: xlp-simple-ui
+    buildpack: predix_openresty_buildpack
+    path: .
+    memory: 64M
+    stack: cflinuxfs2
