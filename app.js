@@ -42,6 +42,9 @@ function processStream(payload) {
     var device = "xlp-trainer-01";
     var re = new RegExp("-" + device + "$");
 
+    console.log("%s %s", new Date(timestamp), deviceName + ": " + value);
+
+
     // only match on required sensor
     if (re.test(deviceName)) {
       var sensorName = deviceName.replace(re, "");
