@@ -8,7 +8,7 @@ var Application = angular.module('Application', [
 Application.controller('MainCtrl', ['$scope', '$rootScope', '$stomp', function($scope, $rootScope, $stomp) {
   //var BACKEND_URL = 'https://sample-gateway.run.aws-usw02-pr.ice.predix.io/stomp',
   var BACKEND_URL = 'https://predix-isk-gateway-iskdev.run.aws-usw02-pr.ice.predix.io/stomp',
-      TOPIC       = '/topic/timeseries';
+      TOPIC       = '/topic/xlp-trainer-01';
 
   var chart;
 
