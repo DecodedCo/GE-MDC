@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>Simple UI</title>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/sockjs/sockjs.js"></script>
-    <script src="bower_components/stomp-websocket/lib/stomp.js"></script>
-    <script src="bower_components/ng-stomp/dist/ng-stomp.min.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="epoch.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
+    <!--<script src="epoch.js"></script>-->
+    <!--<link rel="stylesheet"  href="css/epoch.css"/>-->
+  </head>
+  <body>
+    <!-- <div id="chart" style="height: 300px;width: 100%;"></div> -->
+    <canvas id="sensors" width="1000" height="300"></canvas>
+
     <script src="app.js"></script>
-    <link rel="stylesheet"  href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet"  href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
-    <link rel="stylesheet"  href="css/epoch.css"/>
-</head>
-<body ng-app="Application">
-    <div ng-controller="MainCtrl" class="row">
-        <div class="col-md-12 epoch epoch-theme-dark">
-            <div id="chart" style="position: relative;height: 300px;width: 100%;"></div>
-        </div>
-    </div>
-</body>
+  </body>
 </html>
