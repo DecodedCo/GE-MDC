@@ -50,7 +50,7 @@ function processStream(payload) {
         case "Light":
           sensorSets[0].append(Date(timestamp), value);
           break;
-/*        case "Temperature":
+        case "Temperature":
           sensorSets[1].append(Date(timestamp), value);
           break;
         case "Humidity":
@@ -62,27 +62,22 @@ function processStream(payload) {
         case "Button":
           sensorSets[4].append(Date(timestamp), value);
           break;
-          */
       } // end switch on sensor type
-
     } //
 
   });
 }
 
 var seriesOptions = [
-  { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.1)', lineWidth: 3 }];
-  /*,
+  { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.1)', lineWidth: 3 },
   { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.1)', lineWidth: 3 },
   { strokeStyle: 'rgba(0, 0, 255, 1)', fillStyle: 'rgba(0, 0, 255, 0.1)', lineWidth: 3 },
   { strokeStyle: 'rgba(255, 255, 0, 1)', fillStyle: 'rgba(255, 255, 0, 0.1)', lineWidth: 3 },
   { strokeStyle: 'rgba(255, 255, 255, 1)', fillStyle: 'rgba(255, 255, 255, 0.1)', lineWidth: 3 }
-];*/
+];
 
-// Initialize an empty TimeSeries for each CPU.
-//var sensorSets = [new TimeSeries(), new TimeSeries(), new TimeSeries(), new TimeSeries(), new TimeSeries()]; // 5 sensors
-var sensorSets = [new TimeSeries()]; // 5 sensors
-
+// Initialize an empty TimeSeries for each sensor.
+var sensorSets = [new TimeSeries(), new TimeSeries(), new TimeSeries(), new TimeSeries(), new TimeSeries()]; // 5 sensors
 
 // Build the timeline
 var timeline = new SmoothieChart({ millisPerPixel: 20, grid: { strokeStyle: '#555555', lineWidth: 1, millisPerLine: 1000, verticalSections: 4 }});
@@ -91,55 +86,4 @@ for (var i = 0; i < sensorSets.length; i++) {
   timeline.addTimeSeries(sensorSets[i], seriesOptions[i]);
 }
 
-timeline.streamTo(document.getElementById("sensors"), 10000);
-
-//var chart;
-
-/*
-var connectToWS = function() {
-  var promise = $stomp.connect(BACKEND_URL, {
-    'reconnection': true,
-    'reconnectionDelay': 1000,
-    'reconnectionDelayMax': 5000,
-    'forceNew': true
-  });
-  promise.then(function() {
-    $stomp.subscribe(TOPIC, function(payload) {
-      payload = payload.body;
-      payload.forEach(function(payload) {
-        //console.log(payload.name);
-        if (payload.name == "RotaryAngle-xlp-trainer-01") {
-
-          var latestDataPoint = payload.datapoints[payload.datapoints.length - 1];
-          var time  = latestDataPoint[0],
-              value = latestDataPoint[1];
-          console.log("%s %s", new Date(time), value);
-          chart = chart || $('#chart').epoch({
-              type: 'time.line',
-              data: [
-                {
-                  label: 'Sensor',
-                  values: [{time: time / 1000, y: value}]
-                }
-              ],
-              margins: {right: 30, left: 10},
-              ticks: {time: 5},
-              range: [0, 1024],
-              axes: ['bottom', 'right', 'left']
-            });
-
-          chart.push([{
-            time: time / 1000,
-            y: value
-          }]);
-        } // end device filter
-      });
-
-    });
-
-  });
-  //reconnect
-  $stomp.sock.onclose = connectToWS;
-};
-connectToWS();
-*/
+timeline.streamTo(document.getElementById("sensors"), 5000); // 5 s gap
