@@ -8,7 +8,7 @@
 
 // The gateway uses Stomp for websocket streams
 var gateway = 'https://predix-isk-gateway-iskdev.run.aws-usw02-pr.ice.predix.io/stomp',
-  topic     = '/topic/timeseries',
+  topic     = '/topic/xlp-trainer-01',
   ws = new SockJS(gateway),
   client = Stomp.over(ws);
 
