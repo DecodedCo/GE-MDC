@@ -24,7 +24,7 @@ Application.controller('MainCtrl', ['$scope', '$rootScope', '$stomp', function($
         payload = payload.body;
         payload.forEach(function(payload) {
           //console.log(payload.name);
-          if (payload.name == "Light-xlp-trainer-02") {
+          if (payload.name == "RotaryAngle-xlp-trainer-01") {
 
             var latestDataPoint = payload.datapoints[payload.datapoints.length - 1];
             var time  = latestDataPoint[0],
