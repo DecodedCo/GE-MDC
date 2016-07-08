@@ -9,34 +9,35 @@
 // Which Edge Device and sensor are we reading?
 var device = 'xlp-trainer-02';
 var desiredSensor = $('select option:selected').val();
-var myChart, flag = false;
+var myChart;
 
-// Define sensor ranges
+// Define sensor ranges. These must be listed in order received from gateway
+// as epoch receives data as arrays
 var sensorConfig = {
-  'RotaryAngle': {
-    label: 'Rotary',
+  'Button': {
+    label: 'Button',
     min: 0,
-    max: 300
+    max: 1.2
   },
   'Light': {
     label: 'Light',
     min: 0,
     max: 1024
   },
-  'Humidity': {
-    label: 'Humidity (%)',
+  'RotaryAngle': {
+    label: 'RotaryAngle',
     min: 0,
-    max: 100
+    max: 300
   },
   'Temperature': {
-    label: 'Temperature (C)',
+    label: 'Temperature',
     min: 0,
     max: 50
   },
-  'Button': {
-    label: 'Button',
+  'Humidity': {
+    label: 'Humidity',
     min: 0,
-    max: 1.2
+    max: 100
   }
 }
 
@@ -69,46 +70,52 @@ client.connect(headers, function() {
 function processStream(payload) {
   // Get array of sensors from gateway
   var data = JSON.parse(payload.body).body;
+  var packet = Array();
+
   // Gateway returns arrays of 5 sensors at a time
   data.forEach(function (sensor) {
     var timestamp = sensor.datapoints[0][0];
     var value = sensor.datapoints[0][1];
     var re = new RegExp(`-${device}$`);
     var sensorName = sensor.name.replace(re,'');
-
-    //console.log(Date(timestamp), `${deviceName}: ${value}`);
-
-    if (sensorName == desiredSensor) {
-      myChart.push([{time: timestamp/100, y: value}]);
-      console.log(Date(timestamp), `${sensorName}: ${value}`);
-    }
+    console.log(Date(timestamp), `${sensorName}: ${value}`);
+    packet.push({time: timestamp/1000, y: value});
   });
-}
 
-function drawChart(desiredSensor) {
-
-  // due to epoch quirks not possible to redraw without a refresh :(
-  myChart = $('#myChart').epoch({
-    type: 'time.line',
-    data: [{
-      label: sensorConfig[desiredSensor].label,
-      values:[]
-    }],
-    margins: {right: 30, left: 30, bottom: 20, top: 20},
-    ticks: {time: 5},
-    range: [sensorConfig[desiredSensor].min, sensorConfig[desiredSensor].max],
-    axes: ['bottom', 'left', 'right']
-  });
+  myChart.push(packet);
 
 }
 
-drawChart(desiredSensor);
+// Initial render of chart
+var data=Array();
+for (var sensor in sensorConfig) {
+  data.push({
+    label: sensorConfig[sensor].label,
+    values:[]
+  });
+}
 
+myChart = $('#myChart').epoch({
+  type: 'time.line',
+  data: data,
+  margins: {right: 30, left: 30, bottom: 20, top: 20},
+  ticks: {time: 5},
+  range: [sensorConfig[desiredSensor].min, sensorConfig[desiredSensor].max],
+  axes: ['bottom', 'left', 'right']
+});
+
+// Hide unwanted sensors
+for (var sensor in sensorConfig) {
+  if (sensor !== desiredSensor)
+    myChart.hideLayer(sensor);
+}
+
+// When new sensor is selected...
 $("select").change(function() {
   currentSensor=desiredSensor;
   desiredSensor=$('select option:selected').val();
-  console.log(`Switching to ${desiredSensor}`)
+  console.log(`Switching to ${desiredSensor} from ${currentSensor}`)
   myChart.option('range', [sensorConfig[desiredSensor].min, sensorConfig[desiredSensor].max]);
-
-  //myChart.hideLayer(currentSensor);
+  myChart.hideLayer(currentSensor);
+  myChart.showLayer(desiredSensor);
 });
