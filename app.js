@@ -7,11 +7,42 @@
 */
 
 // Which Edge Device and sensor are we reading?
-var device = 'xlp-trainer-01';
-var desiredSensor = 'RotaryAngle';
+var device = 'xlp-trainer-02';
+var desiredSensor = $('select option:selected').val();
+var myChart, flag = false;
+
+// Define sensor ranges
+var sensorConfig = {
+  'RotaryAngle': {
+    label: 'Rotary',
+    min: 0,
+    max: 300
+  },
+  'Light': {
+    label: 'Light',
+    min: 0,
+    max: 1024
+  },
+  'Humidity': {
+    label: 'Humidity (%)',
+    min: 0,
+    max: 100
+  },
+  'Temperature': {
+    label: 'Temperature (C)',
+    min: 0,
+    max: 50
+  },
+  'Button': {
+    label: 'Button',
+    min: 0,
+    max: 1.2
+  }
+}
 
 // The gateway uses Stomp for websocket streams
 var gateway = 'https://predix-isk-gateway-iskdev.run.aws-usw02-pr.ice.predix.io/stomp',
+//var gateway = 'https://predix-isk-gateway-allen.run.aws-usw02-pr.ice.predix.io/stomp',
   topic     = '/topic/' + device,
   ws = new SockJS(gateway),
   client = Stomp.over(ws);
@@ -36,53 +67,48 @@ client.connect(headers, function() {
 
 // Process incoming data
 function processStream(payload) {
-  // get array of sensors from gateway
+  // Get array of sensors from gateway
   var data = JSON.parse(payload.body).body;
-  // gateway returns arrays of 5 sensors at a time
+  // Gateway returns arrays of 5 sensors at a time
   data.forEach(function (sensor) {
-    var deviceName = sensor.name;
     var timestamp = sensor.datapoints[0][0];
     var value = sensor.datapoints[0][1];
     var re = new RegExp(`-${device}$`);
+    var sensorName = sensor.name.replace(re,'');
 
     //console.log(Date(timestamp), `${deviceName}: ${value}`);
 
-    // only match on required sensor
-    if (re.test(deviceName)) {
-      var sensorName = deviceName.replace(re, '');
-      /*switch (sensorName) {
-        case 'Light':
-          sensorSets[0].append(Date(timestamp), value);
-          break;
-        case 'Temperature':
-          sensorSets[1].append(Date(timestamp), value);
-          break;
-        case 'Humidity':
-          sensorSets[2].append(Date(timestamp), value);
-          break;
-        case 'RotaryAngle':
-          sensorSets[3].append(Date(timestamp), value);
-          break;
-        case 'Button':
-          sensorSets[4].append(Date(timestamp), value);
-          break;
-      } // end switch on sensor type*/
-      if (sensorName == desiredSensor) {
-        myChart.push([{time: timestamp/100, y: value}]);
-        console.log(Date(timestamp), `${sensorName}: ${value}`);
-      }
-    } //
+    if (sensorName == desiredSensor) {
+      myChart.push([{time: timestamp/100, y: value}]);
+      console.log(Date(timestamp), `${sensorName}: ${value}`);
+    }
   });
 }
 
-var myChart = $('#myChart').epoch({
-  type: 'time.line',
-  data: [{
-    label: 'Rotary',
-    values:[]
-  }],
-  margins: {right: 30, left: 10},
-  ticks: {time: 5},
-  range: [0, 300],
-  axes: ['bottom', 'right', 'left']
+function drawChart(desiredSensor) {
+
+  // due to epoch quirks not possible to redraw without a refresh :(
+  myChart = $('#myChart').epoch({
+    type: 'time.line',
+    data: [{
+      label: sensorConfig[desiredSensor].label,
+      values:[]
+    }],
+    margins: {right: 30, left: 30, bottom: 20, top: 20},
+    ticks: {time: 5},
+    range: [sensorConfig[desiredSensor].min, sensorConfig[desiredSensor].max],
+    axes: ['bottom', 'left', 'right']
+  });
+
+}
+
+drawChart(desiredSensor);
+
+$("select").change(function() {
+  currentSensor=desiredSensor;
+  desiredSensor=$('select option:selected').val();
+  console.log(`Switching to ${desiredSensor}`)
+  myChart.option('range', [sensorConfig[desiredSensor].min, sensorConfig[desiredSensor].max]);
+
+  //myChart.hideLayer(currentSensor);
 });
