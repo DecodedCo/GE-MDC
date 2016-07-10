@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: xlp-simple-ui
+  - name: YOURNAME-xlp-dashboard
     buildpack: predix_openresty_buildpack
     path: .
     memory: 64M
