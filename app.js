@@ -6,7 +6,7 @@
 
 */
 
-// Which Edge Device and sensor are we reading?
+// Which Edge Device are we reading?
 var device = 'xlp-trainer-01';
 var charts = {};
 
@@ -92,10 +92,8 @@ function generateFakeData(sensor) {
     y: sensors[sensor].min + (Math.random() * sensors[sensor].max) }];
 }
 
-/*
-setInterval(function() {
+/*setInterval(function() {
   for (var sensor in sensors) {
     charts[sensor].push(generateFakeData(sensor));
   }
-}, 5000);
-*/
+}, 2000);*/

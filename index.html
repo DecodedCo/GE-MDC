@@ -7,19 +7,16 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
-    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/js/epoch.min.js"></script>-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/js/epoch.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/js/epoch.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/css/epoch.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
   </head>
   <body>
-    <section>
-      <style>
-        .line {
-          stroke: red;
-        }
-      </style>
+    <div class="header">
       <h1>My Predix Dashboard</h1>
+      <p>Realtime data from Crotonville</p>
+    </div>
+    <section>
       <article>
         <h2>Light</h2>
         <div id="Light" class="epoch"></div>
@@ -41,6 +38,11 @@
         <div id="RotaryAngle" class="epoch"></div>
       </article>
     </section>
+    <div class="footer">
+      <div class="footer-logo-container">
+        <img class="footer-logo" src="//assets.decoded.com/images/decoded-round-100px.png">
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>
