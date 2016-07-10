@@ -92,8 +92,10 @@ function generateFakeData(sensor) {
     y: sensors[sensor].min + (Math.random() * sensors[sensor].max) }];
 }
 
+/*
 setInterval(function() {
   for (var sensor in sensors) {
     charts[sensor].push(generateFakeData(sensor));
   }
-}, 1000);
+}, 5000);
+*/
