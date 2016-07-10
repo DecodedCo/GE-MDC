@@ -12,16 +12,26 @@
     <link href="style.css" rel="stylesheet">
   </head>
   <body>
-    <h1>My Predix Dashboard</h1>
-    <label>Sensor: </label>
-    <select name="desiredSensor">
-      <option value="Light">Light</option>
-      <option value="Temperature">Temperature (C)</option>
-      <option value="Humidity">Humidity (%)</option>
-      <option value="RotaryAngle">Rotary Angle</option>
-      <option value="Button">Button</option>
-    </select>
-    <div id="myChart" class="epoch"></div>
+    <div class="header">
+      <h1>My Predix Dashboard</h1>
+      <p>Realtime data from Crotonville</p>
+    </div>
+    <section>
+      <label>Sensor: </label>
+      <select name="desiredSensor">
+        <option value="Light">Light</option>
+        <option value="Temperature">Temperature (C)</option>
+        <option value="Humidity">Humidity (%)</option>
+        <option value="RotaryAngle">Rotary Angle</option>
+        <option value="Button">Button</option>
+      </select>
+      <div id="myChart" class="epoch"></div>
+    </section>
+    <div class="footer">
+      <div class="footer-logo-container">
+        <img class="footer-logo" src="//assets.decoded.com/images/decoded-round-100px.png">
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

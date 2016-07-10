@@ -4,5 +4,39 @@
 }
 
 body {
-  font-family: sans-serif;
+  font: 14px Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  padding: 20px;
+}
+
+div.header {
+  color: #ffffff;
+  background-image: url('/images/banner-dark.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px;
+  width: calc(100% - 40px); /* account for padding */
+}
+
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: -99;
+}
+
+.footer-logo-container {
+  position: relative;
+}
+
+.footer-logo {
+  height: 50px;
+  padding: 20px;
+  float: right;
 }
