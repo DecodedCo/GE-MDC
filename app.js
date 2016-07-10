@@ -6,29 +6,20 @@
 
 */
 
-// Which Edge Device and sensor are we reading?
+// Which Edge Device are we reading?
 var device = 'xlp-trainer-01';
-var desiredSensor = $('select option:selected').val();
-var myChart;
+var charts = {};
 
 // Define sensor data
 // min/max correspond to sensor ranges
+// color corresponds to d3 categorical color
 var sensors = {
-  'Button' : { 'min': 0, 'max': 1 },
-  'Light' : { 'min': 0, 'max': 1024 },
-  'RotaryAngle' : { 'min': 0, 'max': 300 },
-  'Temperature' : { 'min': 0, 'max': 80 }, // in degrees C
-  'Humidity' : { 'min': 0, 'max': 100 },
+  'Button' : { 'min': 0, 'max': 1, 'color': 'category1' },
+  'Light' : { 'min': 0, 'max': 1024, 'color': 'category2' },
+  'RotaryAngle' : { 'min': 0, 'max': 300, 'color': 'category3' },
+  'Temperature' : { 'min': 0, 'max': 80, 'color': 'category4' }, // in degrees C
+  'Humidity' : { 'min': 0, 'max': 100, 'color': 'category5' },
 };
-
-// Create index for sensor data
-// Sensor order varies per websocket connection
-// We need it to be consistent for viz
-var indexes = Array();
-
-for (sensor in sensors) {
-  indexes.push(sensor);
-}
 
 // The gateway uses Stomp for websocket streams
 var gateway = 'https://predix-isk-gateway-iskdev.run.aws-usw02-pr.ice.predix.io/stomp',
@@ -58,72 +49,51 @@ client.connect(headers, function() {
 function processStream(payload) {
   // Get array of sensors from gateway
   var data = JSON.parse(payload.body).body;
-  var packet = Array();
 
   // Gateway returns arrays of 5 sensors at a time
-  // Make sure they are ordered as per the initialization object
   data.forEach(function (sensor) {
     var timestamp = sensor.datapoints[0][0];
     var value = sensor.datapoints[0][1];
     var re = new RegExp(`-${device}$`);
     var sensorName = sensor.name.replace(re,'');
-    var index = indexes.indexOf(sensorName);
 
     console.log(Date(timestamp), `${sensorName}: ${value}`);
 
-    packet[index] = {time: timestamp/1000, y: value};
+    charts[sensorName].push({time: timestamp/1000, y: value});
   });
-
-  myChart.push(packet);
 
 }
 
-// Initial render of chart
-var data=Array();
-for (var sensor in indexes) {
-  data.push({
-    label: indexes[sensor],
-    values:[] // blank starting point
-  });
-}
-
-myChart = $('#myChart').epoch({
-  type: 'time.line',
-  data: data,
-  margins: {right: 30, left: 30, bottom: 20, top: 20},
-  ticks: {time: 5},
-  range: [sensors[desiredSensor].min, sensors[desiredSensor].max],
-  axes: ['bottom', 'left', 'right']
-});
-
-// Hide unwanted sensors for single sensor view
+// Initialize charts
 for (var sensor in sensors) {
-  if (sensor !== desiredSensor)
-    myChart.hideLayer(sensor);
-}
+  charts[sensor] = $(`#${sensor}`).epoch({
+    type: 'time.line',
+    data: [{
+      label: sensor,
+      values: []
+    }],
+    margins: {right: 30, left: 30, bottom: 20, top: 20},
+    ticks: {time: 5},
+    range: [sensors[sensor].min, sensors[sensor].max],
+    axes: ['bottom', 'left', 'right']
+  });
 
-// When new sensor is selected, hide current and show new
-$("select").change(function() {
-  currentSensor=desiredSensor;
-  desiredSensor=$('select option:selected').val();
-  console.log(`Switching from ${currentSensor} to ${desiredSensor}`)
-  myChart.option('range', [sensors[desiredSensor].min, sensors[desiredSensor].max]);
-  myChart.hideLayer(currentSensor);
-  myChart.showLayer(desiredSensor);
-});
+  // switch to correct d3 color
+  charts[sensor].getVisibleLayers()[0].className =
+    charts[sensor].getVisibleLayers()[0].className.replace('category1', sensors[sensor].color);
+
+}
 
 /* Debugging functions */
 
-function generateFakeData() {
-  var packet = Array();
-
-  for (var sensor in indexes) {
-    packet.push({
-      time: Date.now()/1000,
-      y: sensors[indexes[sensor]].min + (Math.random() * sensors[indexes[sensor]].max)
-    });
-  }
-  return packet;
+function generateFakeData(sensor) {
+  return [{
+    time: Date.now()/1000,
+    y: sensors[sensor].min + (Math.random() * sensors[sensor].max) }];
 }
 
-//setInterval(function() { myChart.push(generateFakeData()); }, 1000);
+/*setInterval(function() {
+  for (var sensor in sensors) {
+    charts[sensor].push(generateFakeData(sensor));
+  }
+}, 2000);*/
