@@ -1,5 +1,6 @@
 body {
-  font: 14px Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 14px;
   margin: 0;
   height: 100vh;
   display: flex;
@@ -31,7 +32,7 @@ div.epoch {
 
 div.header {
   color: #ffffff;
-  background-image: url('/images/banner-dark.png');
+  background-image: url('images/banner-dark.png');
   background-repeat: no-repeat;
   background-size: cover;
   padding: 20px;
@@ -53,4 +54,10 @@ div.header {
   height: 50px;
   padding: 20px;
   float: right;
+}
+
+@media (max-width: 640px) {
+  article {
+    width: calc(100% - 40px);
+  }
 }

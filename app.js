@@ -7,7 +7,7 @@
 */
 
 // Which Edge Device are we reading?
-var device = 'xlp-trainer-01';
+var device = 'xlp-68';
 var charts = {};
 
 // Define sensor data
