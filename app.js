@@ -56,7 +56,7 @@ function processStream(payload) {
     var value = sensor.datapoints[0][1];
     var re = new RegExp(`-${device}$`);
     var sensorName = sensor.name.replace(re,'');
-
+    $(`#${sensorName}_value`).html(value);
     console.log(Date(timestamp), `${sensorName}: ${value}`);
 
     charts[sensorName].push([{time: timestamp/1000, y: value}]);
