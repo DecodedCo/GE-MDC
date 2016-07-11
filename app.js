@@ -59,7 +59,7 @@ function processStream(payload) {
 
     console.log(Date(timestamp), `${sensorName}: ${value}`);
 
-    charts[sensorName].push({time: timestamp/1000, y: value});
+    charts[sensorName].push([{time: timestamp/1000, y: value}]);
   });
 
 }
