@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: YOURNAME-xlp-dashboard
+  - name: crotonville-dashboard
     buildpack: predix_openresty_buildpack
     path: .
     memory: 64M

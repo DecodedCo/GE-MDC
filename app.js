@@ -7,22 +7,22 @@
 */
 
 // Which Edge Device are we reading?
-var device = 'xlp-07';
+var device = 'xlp-trainer-03';
 var charts = {};
 
 // Define sensor data
 // min/max correspond to sensor ranges
 // color corresponds to d3 categorical color
 var sensors = {
-  'Button' : { 'min': 0, 'max': 1, 'color': 'category1' },
-  'Light' : { 'min': 0, 'max': 1024, 'color': 'category2' },
-  'RotaryAngle' : { 'min': 0, 'max': 300, 'color': 'category3' },
-  'Temperature' : { 'min': 0, 'max': 80, 'color': 'category4' }, // in degrees C
+  'CoalPower' : { 'min': 0, 'max': 500, 'color': 'category1' },
+  'GasPower' : { 'min': 0, 'max': 500, 'color': 'category2' },
+  'WindPower' : { 'min': 0, 'max': 500, 'color': 'category3' }, 
+  'Temperature' : { 'min': 0, 'max': 100, 'color': 'category4' }, // in degrees C
   'Humidity' : { 'min': 0, 'max': 100, 'color': 'category5' },
 };
 
 // The gateway uses Stomp for websocket streams
-var gateway = 'https://predix-isk-gateway-iskdev.run.aws-usw02-pr.ice.predix.io/stomp',
+var gateway = 'https://predix-isk-gateway-iskdev-allen.run.aws-usw02-pr.ice.predix.io/stomp',
   topic     = '/topic/' + device,
   ws = new SockJS(gateway),
   client = Stomp.over(ws);
@@ -50,16 +50,19 @@ function processStream(payload) {
   // Get array of sensors from gateway
   var data = JSON.parse(payload.body).body;
 
-  // Gateway returns arrays of 5 sensors at a time
+  // Gateway returns arrays of all data
   data.forEach(function (sensor) {
+    // filter for data we want
     var timestamp = sensor.datapoints[0][0];
-    var value = sensor.datapoints[0][1];
+    var value = sensor.datapoints[0][1].toFixed(1);
     var re = new RegExp(`-${device}$`);
     var sensorName = sensor.name.replace(re,'');
-    $(`#${sensorName}_value`).html(value);
-    console.log(Date(timestamp), `${sensorName}: ${value}`);
 
-    charts[sensorName].push([{time: timestamp/1000, y: value}]);
+    if (sensorName in sensors) {
+      $(`#${sensorName}_value`).html(value);
+      console.log(Date(timestamp), `${sensorName}: ${value}`);
+      charts[sensorName].push([{time: timestamp/1000, y: value}]);
+    } // end checking if valid sensor
   });
 
 }
