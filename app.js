@@ -1,8 +1,8 @@
 /*
 
-  GE XLP Tuesday
+  GE MDC Dashboard
 
-  (c) Decoded 2016
+  (c) Decoded 2017
 
 */
 

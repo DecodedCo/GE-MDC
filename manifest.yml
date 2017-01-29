@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: crotonville-dashboard
+  - name: YOURNAME-MDC-dashboard
     buildpack: predix_openresty_buildpack
     path: .
     memory: 64M

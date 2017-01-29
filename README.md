@@ -1,5 +1,5 @@
-# ge-xlp-tuesday
-Boilerplate frontend code for GE XLP Predix Experience
+# GE MDC
+Boilerplate frontend code for GE MDC Experience
 
 ## Development
 
@@ -9,6 +9,5 @@ Boilerplate frontend code for GE XLP Predix Experience
 
 ## Deployment
 
-1. Update `manifest.yml`, replacing `YOURNAME`
-2. Update `app.js` with your edge device
-3. Run `cf push`, you may have to run `cf login` beforehand
+1. Update `manifest.yml`, replacing `YOURNAME` without using any spaces
+2. Run `cf push`, you may have to run `cf login` beforehand
