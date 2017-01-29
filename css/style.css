@@ -4,19 +4,23 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #3b3b3f;
 }
 
 section {
   clear: both;
+  background-color: #8b8d8f;
 }
 
 article {
   overflow: hidden;
-  background-color: rgba(255,255,255,0.7);
-  padding: 10px;
+  background-color: white;
+  padding: 20px;
   margin: 10px;
-  width: calc(33% - 40px);
+  width: calc(33% - 60px);
   float:left;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 h2 {
@@ -30,7 +34,6 @@ div.epoch {
 }
 
 div.header {
-  background-color: #3b3b3f;
   background-repeat: no-repeat;
   background-size: cover;
   padding: 20px;
@@ -62,7 +65,7 @@ img#logo {
   width: 100%;
   position: fixed;
   bottom: 0;
-  z-index: -99;
+  z-index: 99;
 }
 
 .footer-logo-container {
