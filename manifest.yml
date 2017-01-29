@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: YOURNAME-MDC-dashboard
+  - name: YOURNAME-mdc-dashboard
     buildpack: predix_openresty_buildpack
     path: .
     memory: 64M

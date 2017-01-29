@@ -80,6 +80,9 @@ img#logo {
 
 @media (max-width: 640px) {
   article {
-    width: calc(100% - 40px);
+    width: calc(100% - 60px);
+  }
+  div.header h2 {
+    display: none;
   }
 }
