@@ -17,8 +17,8 @@ var sensors = {
   'CoalPower' : { 'min': 0, 'max': 500, 'color': 'category1' },
   'GasPower' : { 'min': 0, 'max': 500, 'color': 'category2' },
   'WindPower' : { 'min': 0, 'max': 500, 'color': 'category3' }, 
-  'Temperature' : { 'min': 0, 'max': 100, 'color': 'category4' }, // in degrees C
-  'Humidity' : { 'min': 0, 'max': 100, 'color': 'category5' },
+  'Temperature' : { 'min': 0, 'max': 100, 'color': 'category4', 'avg': 19.2 }, // in degrees C
+  'Humidity' : { 'min': 0, 'max': 100, 'color': 'category5', 'avg': 20.1 },
 };
 
 // The gateway uses Stomp for websocket streams
@@ -42,7 +42,13 @@ client.connect(headers, function() {
   console.log(`Connected to ${gateway}`);
   client.subscribe(topic, processStream);
 }, function() {
-  alert('Websocket connection failed. Try reloading the page.');
+  console.log('Websocket connection failed. Try reloading the page.');
+  setInterval(function() {
+    for (var sensor in sensors) {
+      charts[sensor].push(generateHistoricalData(sensor));
+    }
+  }, 2000);
+  
 });
 
 // Process incoming data
@@ -89,14 +95,11 @@ for (var sensor in sensors) {
 
 /* Debugging functions */
 
-function generateFakeData(sensor) {
+function generateHistoricalData(sensor) {
+  var val = (sensors[sensor].avg) ? sensors[sensor].avg : sensors[sensor].min + (sensors[sensor].max - sensors[sensor].min)/2;
+  val = (1 + 0.05*Math.random()) * val;
   return [{
     time: Date.now()/1000,
-    y: sensors[sensor].min + (Math.random() * sensors[sensor].max) }];
+    y: val   
+  }];
 }
-
-/*setInterval(function() {
-  for (var sensor in sensors) {
-    charts[sensor].push(generateFakeData(sensor));
-  }
-}, 2000);*/
