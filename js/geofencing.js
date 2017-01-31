@@ -28,8 +28,6 @@ function success(position){
     $("p#message").html("You made it! Continue your work here.");
 
   } else {
-    // prevent checkin - hide the form
-    $("form").hide();
 
     // change message to an encouraging message
     $("p#message").html("You need to get closer. You are still " + distance.toFixed(2) + " miles away.");
