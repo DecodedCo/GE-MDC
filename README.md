@@ -10,5 +10,5 @@ Boilerplate code for GE MDC Experience
 
 ## Deployment
 
-1. Update `manifest.yml`, replacing `YOURNAME` without using any spaces
+1. Update `manifest.yml`, replacing `YOURNAME` without using any spaces or special characters apart from '-'
 2. Run `cf push`, you may have to run `cf login` beforehand
