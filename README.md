@@ -1,5 +1,6 @@
 # GE MDC
-Boilerplate frontend code for GE MDC Experience
+
+Boilerplate code for GE MDC Experience
 
 ## Development
 
