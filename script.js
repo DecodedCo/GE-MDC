@@ -28,7 +28,7 @@ function success(position){
   if (distance < radius) {
 
     // change message to a welcome message
-    message.innerHTML = "You made it! Check in to receive your reward.";
+    message.innerHTML = "You made it! Check in now for your reward!";
 
   } else {
 
