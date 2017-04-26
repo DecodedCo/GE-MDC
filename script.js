@@ -1,4 +1,4 @@
-// Use HTML5 geolocaiton to track the user
+// Use HTML5 geolocation to track the user
 watchUser = navigator.geolocation.watchPosition(success, error);
 
 // Locate the message paragraph
