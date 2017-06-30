@@ -7,16 +7,16 @@
 */
 
 // Which Edge Device are we reading?
-var device = 'xlp-trainer-03';
+var device = 'xlp-62';
 var charts = {};
 
 // Define sensor data
 // min/max correspond to sensor ranges
 // color corresponds to d3 categorical color
 var sensors = {
-  'CoalPower' : { 'min': 0, 'max': 500, 'color': 'category1' },
-  'GasPower' : { 'min': 0, 'max': 500, 'color': 'category2' },
-  'WindPower' : { 'min': 0, 'max': 500, 'color': 'category3' }, 
+  'Button' : { 'min': 0, 'max': 2, 'color': 'category1' },
+  'Light' : { 'min': 0, 'max': 1024, 'color': 'category2' },
+  'RotaryAngle' : { 'min': 0, 'max': 320, 'color': 'category3' }, 
   'Temperature' : { 'min': 0, 'max': 100, 'color': 'category4', 'avg': 19.2 }, // in degrees C
   'Humidity' : { 'min': 0, 'max': 100, 'color': 'category5', 'avg': 20.1 },
 };
@@ -55,7 +55,6 @@ client.connect(headers, function() {
 function processStream(payload) {
   // Get array of sensors from gateway
   var data = JSON.parse(payload.body).body;
-
   // Gateway returns arrays of all data
   data.forEach(function (sensor) {
     // filter for data we want

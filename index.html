@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Crotonville Dashboard</title>
+    <title>My XLP Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -17,35 +17,35 @@
   <body>
     <div class="header">
       <img src="images/logo.svg" id="logo">
-      <h1>My Crotonville Dashboard</h1>
+      <h1>My XLP Dashboard</h1>
       <h2>Powered by Predix</h2>
     </div>
     <section>
       <article>
-        <h2>Coal Power (<span id='CoalPower_value'></span> MW)</h2>
+        <h2>Button (<span id='Button_value'></span>)</h2>
         <hr>
-        <div id="CoalPower" class="epoch"></div>
+        <div id="Button" class="epoch"></div>
       </article>
       <article>
-        <h2>Gas Power (<span id='GasPower_value'></span> MW)</h2>
+        <h2>Light (<span id='Light_value'></span> A.U.)</h2>
         <hr>
-        <div id="GasPower" class="epoch"></div>
+        <div id="Light" class="epoch"></div>
       </article>
       <article>
-        <h2>Wind Power (<span id='WindPower_value'></span> MW)</h2>
+        <h2>Rotary Angle (<span id='RotaryAngle_value'></span> &deg;)</h2>
         <hr>
-        <div id="WindPower" class="epoch"></div>
+        <div id="RotaryAngle" class="epoch"></div>
       </article>
       <article>
         <h2>Temperature (<span id='Temperature_value'></span>&deg;C)</h2>
         <hr>
         <div id="Temperature" class="epoch"></div>
       </article>
-      <!-- <article>
+      <article>
         <h2>Humidity (<span id='Humidity_value'></span>%)</h2>
         <hr>
         <div id="Humidity" class="epoch"></div>
-      </article> -->
+      </article>
     </section>
     <div class="footer">
       <div class="footer-logo-container">
